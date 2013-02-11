@@ -1,9 +1,7 @@
-Petri
+Hacker Union
 =====
 
-It's the dough.
-
-![petri](http://us.cdn3.123rf.com/168nwm/prawny/prawny0907/prawny090700015/5159969-a-petri-dish-with-colourful-cartoon-germs-swimming-around-in-it.jpg)
+This is the code that powers [hackerunion.org](http://www.hackerunion.org). It is built on top of [petri](https://github.com/huffpostlabs/petri)
 
 Dependencies
 ----
@@ -37,11 +35,6 @@ We automatically create a test user with superuser abilities. Username: ```admin
 
 The user has the password: "testuser".
 
-
-Use Cases
-----
-
-* [The Hacker Union](http://hackerunion.org) is built on Petri.
 
 
 Contributors
