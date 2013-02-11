@@ -33,7 +33,7 @@ Test Users
 
 We automatically create a test user with superuser abilities. Username: ```admin```
 
-The user has the password: "testuser".
+The user has the password: "testuser" and can be used to access the django admin project.
 
 
 Contributors
@@ -48,4 +48,3 @@ License
 ----
 
 This project is licensed under GNU GENERAL PUBLIC LICENSE VERSION 3. See the file [LICENSE.md](LICENSE.md) for a copy of the license.
-
