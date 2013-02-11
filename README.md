@@ -42,3 +42,18 @@ License
 ----
 
 This project is licensed under GNU GENERAL PUBLIC LICENSE VERSION 3. See the file LICENSE.md for a copy of the license.
+
+
+
+Use Cases
+----
+
+* [The Hacker Union](http://hackerunion.org) is built on Petri.
+
+
+Contributors
+----
+
+* [Andrew Sass](http://www.andrewsass.com/)
+* [Brandon Diamond](http://www.twitter.com/brandondiamond)
+* [Matthew Conlen](http://www.mathisonian.com/)
