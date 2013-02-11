@@ -1,7 +1,7 @@
 Hacker Union
 =====
 
-This is the code that powers [hackerunion.org](http://www.hackerunion.org). It is built on top of [petri](https://github.com/huffpostlabs/petri)
+This is the code that powers [hackerunion.org](http://www.hackerunion.org). It is built on top of [petri](https://github.com/huffpostlabs/petri), an open source project developed at HuffPost Labs. The backend uses the python django framework, and the front end is built using the Zurb Foundation framework.
 
 Dependencies
 ----
@@ -36,14 +36,12 @@ We automatically create a test user with superuser abilities. Username: ```admin
 The user has the password: "testuser".
 
 
-
 Contributors
 ----
 
 * [Andrew Sass](http://www.andrewsass.com/)
 * [Brandon Diamond](http://www.twitter.com/brandondiamond)
 * [Matthew Conlen](http://www.mathisonian.com/)
-
 
 
 License
