@@ -1,0 +1,228 @@
+{% load helpers %}
+{% load gravatar %}
+
+// To do list
+- if current_user.get_profile.show_guide
+  .alert-box.to-do    
+    a(href="").close.close-guide
+      &times;
+    .mod
+      p.lead Welcome! Let's Get Started.
+      ul
+        li
+          a(href="/accounts/settings") Complete
+          |  your profile
+        li
+          a(href="#").open-talk Introduce
+          |  yourself
+        li 
+          a(href="#").open-events Explore
+          |  local events
+        
+        - if current_user.get_profile.is_leader
+          li 
+            a(href="/#{current_chapter.slug}/posts/go/guide-readme") Learn
+            |  about being a guide
+        - else
+          li 
+            a(href="/#{current_chapter.slug}/posts/go/what-is-a-guide") Learn
+            |  about guides
+
+.mod
+  .medium.button.radius.dropdown
+    - if current_user.get_profile.can_moderate
+      | Moderator Tools
+    - else
+      - if current_user.get_profile.is_leader
+        | Guide Tools
+      - else 
+        | Member Tools
+    ul
+      li
+        a(href="", data-reveal-id="sendGroupMessage") New Message&hellip;
+
+      - if current_user.get_profile.is_leader
+        li
+          a(href="", data-reveal-id="sendInvite") Send Invite&hellip;
+
+        - if current_user.get_profile.can_moderate
+          li.divider
+          li
+            a(href="", data-reveal-id="doModerators") Manage Moderators
+          li
+            a(href="", data-reveal-id="doGuides") Manage Guides
+          li
+            a(href="", data-reveal-id="doMentees") Transfer Recruits
+          li.divider
+          li
+            a(href="", data-reveal-id="injectMarkup") Inject Markup
+          li
+            a(href="", data-reveal-id="banUser") Ban User
+        - else
+          li.divider
+          li
+            a(href="", data-reveal-id="help") Report Abuse
+      - else
+        li
+          a(href="", data-reveal-id="sendReferral") Send Invite&hellip;
+        li.divider
+        li
+          a(href="", data-reveal-id="help") Get Help
+        li.divider
+        li
+          a(href="", data-reveal-id="newMentor") Request Guide
+        li
+          a(href="", data-reveal-id="becomeLeader") Become Guide
+      li.divider
+      li
+        a(href="/accounts/settings") Edit Profile
+
+// My member card
+.mod
+  h5 Your Profile 
+    span.edit 
+      a(href="/accounts/settings") Edit
+  {% render_member_card current_user.get_profile current_user.get_profile %}
+  //- .member-card
+    .member-info
+        .row
+          .twelve.columns
+            .three.columns.pic
+              img(src!='{% gravatar_for_email  current_user.get_profile.get_gravatar_email %}')
+            .nine.columns
+              .name
+                | #{current_user.username}
+              !{current_user.get_profile.render_social}
+        
+        !{current_user.get_profile.render_skills}
+
+
+// My Mentees
+- if current_user.get_profile.is_leader
+  .mod
+    h5 Your Recruits
+    - for chunk in mentee_chunks
+      .row.buddies
+        - for mentee_dict in chunk
+          - for key, value in mentee_dict.items
+            - if value
+              .four.columns
+                .buddy.text-center
+                  .pic.has-tip.tip-top.noradius(title="#{value.display_name} (#{value.user.username})")
+                    .button.dropdown(style!="background-image: url('{% gravatar_for_email value.get_gravatar_email %}')")
+                      ul
+                        li
+                          a(href="/nyc/members/?n=#{value.user.username}") View Profile
+                        li
+                          a(href="#", data-username="#{value.user.username}").user-message Send Message&hellip;
+                        li.divider
+                        li 
+                          a(href="#", data-username="#{ value.user.username }").make-leader Make Into Guide
+                        - if current_user.get_profile.can_moderate
+                          li
+                            a(href="", data-username="#{ value.user.username }").make-moderator Make Into Moderator
+                        li
+                          a(href="#", data-user="#{ value.user.pk }").remove-mentee Stop Guiding
+                        li.divider
+                        li
+                          a(href="", data-username="#{ value.user.username }").ban-mentee Ban User
+
+            - else            
+              .four.columns
+                .buddy.empty.text-center
+                  a(href="", data-reveal-id="sendInvite").pic
+                    | Click to Invite
+
+    - if current_user.get_profile.get_mentees
+      a(href="", data-reveal-id="sendGroupMessage").button.full-width.radius Send Message
+
+- if not current_user.get_profile.is_leader
+  .mod
+    h5 Your Guide
+    - if not current_user.get_profile.leader
+      .no-mentor
+        | You don't have a guide yet. 
+        a(href="", data-reveal-id="newMentor") Find one +
+    - else
+      {% render_member_card current_user.get_profile.leader.get_profile current_user.get_profile %}
+
+
+// Actions for a mentee
+- if not current_user.get_profile.is_leader
+  - if pending_requests
+    .mod
+      h5 Pending Requests
+      ul.square
+        - for pending in pending_requests
+          li
+            a(href="/#{pending.chapter.slug}/posts/#{pending.pk}/")
+              !{pending.render_text|capfirst|truncatewords_html:7}
+
+
+.mod
+  a(name="mailingLists").invisible 
+  h5 Mailing Lists
+  p You can contact the group by sending emails to any of these mailing lists.
+  dl
+    - if current_user.get_profile.is_leader
+      dt
+        - if current_user.get_profile.allow_official
+          input(type="checkbox", checked="checked").official-notice-toggle
+        - else 
+          input(type="checkbox").official-notice-toggle
+        |  Administration
+      dd
+        a(href="{{ mailto:current_chapter.get_official_list }}")
+          | #{current_chapter.get_official_list|urlize}
+
+    dt 
+      - if current_user.get_profile.allow_discuss
+        input(type="checkbox", checked="checked").discuss-notice-toggle
+      - else 
+        input(type="checkbox").discuss-notice-toggle
+      |  General Talk
+    dd
+      a(href="{{ mailto:current_chapter.get_discuss_list }}")
+        | #{current_chapter.get_discuss_list|urlize}
+
+    dt
+      input(type="checkbox", checked="checked", disabled="disabled").disabled 
+      |  Your Alias
+    dd
+      a(href="{{ mailto:current_user.get_profile.get_email }}")
+        | #{current_user.get_profile.get_email|urlize}
+
+    dt
+      - if current_user.get_profile.email_digest == 1
+        input(type="checkbox").digest-notice-toggle 
+      - else
+        input(type="checkbox", checked="checked").digest-notice-toggle 
+      |  Curated Digest
+    dd
+      - if current_user.get_profile.email_digest == 1
+        select(disabled="true").shorter.digest-notice-select
+          option(value=2) Daily
+          option(value=3) Weekly
+          option(value=4) Monthly
+      - else
+        select.shorter.digest-notice-select
+          - if current_user.get_profile.email_digest == 2
+            option(value=2, selected="true") Daily
+          - else
+            option(value=2) Daily
+          - if current_user.get_profile.email_digest == 3
+            option(value=3, selected="true") Weekly
+          - else
+            option(value=3) Weekly
+          - if current_user.get_profile.email_digest == 4
+            option(value=4, selected="true") Monthly
+          - else
+            option(value=4) Monthly
+
+.mod
+  h5 About #{current_chapter.slug|upper}
+  p #{current_chapter.description}
+
+
+  .text-right
+    a(href="/petition/", target="_blank") More chapters &rarr;

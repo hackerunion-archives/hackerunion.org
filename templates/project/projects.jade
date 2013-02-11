@@ -1,0 +1,81 @@
+extends chapter/base
+
+{% load helpers %}
+{% load gravatar %}
+{% load widget_tweaks %}
+
+block title-extended
+  | | Projects
+
+block nav
+  ul.right
+    li.animate
+      a(href='/#{current_chapter.slug}') home
+    li.animate
+      a(href='/#{current_chapter.slug}/members') members
+    li.animate.active
+      a(href='/#{current_chapter.slug}/projects/') projects
+    - if is_insider
+      li.animate
+        a(href='/accounts/logout') logout
+    - else
+      li.animate
+        a(href='/accounts/login') login
+
+block content
+  .row.cramped
+    .seven.columns
+      h2.subheader
+        | Projects are 
+        em group initiatives.
+      p.lead
+        | Browse through the directory&mdash; or start a new project.
+      ul.project-list
+        - for bulletin in projects
+          li
+            .row
+              .two.columns
+                .project-img
+                  - if bulletin.picture
+                    img(src="#{bulletin.picture}")
+                  - else
+                    img(src!="http://lorempixel.com/g/100/100/animals?cache={% cachebuster %}")
+            
+              .ten.columns
+                .creator 
+                  span.name 
+                    a(href="/#{bulletin.chapter.slug}/members/?n=#{bulletin.owner.username}") #{bulletin.owner.get_profile.display_name}
+                    - if bulletin.moderated_by
+                      span.moderated(title!="Moderated by {{bulletin.moderated_by.get_profile.display_name}}") * 
+                  span.username 
+                    | @#{bulletin.owner.username}
+                  
+                  span.right
+                    span.changeit  
+                      - if bulletin.owner.get_profile == current_user_profile
+                        a(href="#", data-reveal-id="editBulletin").talk-edit Edit 
+                    span.timestamp {% humanize_time_diff bulletin.created %}
+            
+                h4.subheader
+                  a(href="/#{bulletin.chapter.slug}/posts/#{bulletin.pk}")
+                        #{bulletin.title}
+                
+                //.talk-content
+                  #{bulletin.content}
+  
+      
+    .five.columns
+      .panel  
+        h4
+          | Create a Project
+        form(method='post', action='')
+          {% csrf_token %}
+          //- input(type="text", placeholder="Project title") 
+          #{project_form.title.errors}
+          #{project_form.title|attr:'placeholder:Project title'}
+          #{project_form.content.errors}
+          textarea(placeholder="Project description", name="content").project-content-input
+
+          #{project_form.url.errors}
+          #{project_form.url|attr:'placeholder:Image url'}
+          input(type='submit', value='Create Project').button.radius.full-width

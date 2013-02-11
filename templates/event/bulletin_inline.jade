@@ -1,0 +1,82 @@
+{% load gravatar %}
+{% load helpers %}
+
+li(class!="post event {% if bulletin.promoted_by %}promoted{% endif %}", data-id='#{bulletin.pk}')
+  - if bulletin.promoted_by
+    .icon-promoted.has-tip.tip-top(title="Endorsed Post")
+  - else
+    .icon-promoted.hidden
+  - if bulletin.is_official
+    .icon-official.has-tip.tip-top(title="Only Visible to Guides")
+  - else
+    .icon-official.hidden
+  .post-wrap
+    .creator 
+      strong 
+        a(href="/nyc/members/?n=#{bulletin.owner.username}") #{bulletin.owner.get_profile.display_name} 
+          - if bulletin.moderated_by
+            span.moderated(title!="Moderated by {{bulletin.moderated_by.get_profile.display_name}}") * 
+      | created an event
+
+      span.right
+        span.changeit  
+          - if current_user|can_edit:bulletin.owner
+            a(href="#", data-reveal-id="editEvent").event-edit
+              - if bulletin.owner.get_profile == current_user_profile
+                | Edit 
+              - else
+                | Moderate
+        span.timestamp {% humanize_time_diff bulletin.created %}
+
+    h4.subheader
+      a(href="/#{bulletin.chapter.slug}/posts/#{bulletin.pk}").title #{bulletin.title}
+    .post-content(data-content!='{{bulletin.content}}')
+      !{bulletin.content|safe|truncatewords_html:50}
+    .event-deetz
+      .event-date 
+        span.start-date(data-time!="{{bulletin.start|date:'H:i'}}", data-date!="{{bulletin.start|date:'m/d/Y'}}") #{bulletin.start|date:'n/j \a\t P'} 
+        span 
+          |  &mdash;  
+        span.end-date(data-time!="{{bulletin.end|date:'H:i'}}", data-date!="{{bulletin.end|date:'m/d/Y'}}") #{bulletin.end|date:'n/j \a\t P'}
+      .event-location  
+        span.where
+          strong #{bulletin.where}
+      .attendees
+        span.hacker-count #{bulletin.followed_by.all|length} 
+        span.hacker-count-label
+          | {% ifequal bulletin.followed_by.all|length 1  %}hacker is{% else %}hackers are{% endifequal %} in. 
+        | Are you?
+
+      .faces
+        - for attendee in bulletin.followed_by.all
+          span
+            a(href="/nyc/members/?n=#{attendee.username}")
+              img(src!="{% gravatar_for_email attendee.get_profile.get_gravatar_email %}", title="#{attendee.get_profile().display_name}", data-id="#{attendee.pk}").has-tip.tip-top
+  
+  .bulletin-actions.text-right
+
+
+    span.recommend
+      span.icon-bulletin
+      span
+        a(class="recommend", data-placement='above', data-id="#{bulletin.pk}", data-message="I thought you might like this event", title="Share this post" )
+          | Share
+
+    span(class!="attending {% following bulletin current_user_profile.user %}")
+      span.icon-bulletin
+      span
+        a(href="#", data-id="#{bulletin.pk}").event-attending
+          | Participate
+
+    span(class!="replies {% if bulletin.comment_set.all|length > 0 %}active{% endif %}")
+      a(href="/#{bulletin.chapter.slug}/posts/#{bulletin.pk}") 
+        span.icon-bulletin
+        span #{bulletin.comment_set.all|length} Replies
+
+    - if current_user_profile.is_leader or not bulletin.is_promoted
+      span(class!="promote {% if bulletin.is_promoted %}active{% endif %}")
+        span.icon-bulletin
+        span 
+          a(href="#", data-id="#{bulletin.pk}", data-leader!="{{ current_user_profile.is_leader|yesno:'true,false' }}").talk-promote 
+            | Endorse
+

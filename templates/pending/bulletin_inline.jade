@@ -1,0 +1,17 @@
+{% load gravatar %}
+{% load helpers %}
+
+li.post
+  .post-wrap.row
+    .two.columns
+      .avatar
+       {% gravatar_img_for_email  bulletin.owner.get_profile.get_gravatar_email %}
+
+    .content.ten.columns 
+       span.name 
+          #{bulletin.owner.get_profile.display_name}
+        span.username
+          | @#{bulletin.owner.username}
+       span.timestamp {% humanize_time_diff bulletin.created %}
+       br
+       !{bulletin.content|safe}

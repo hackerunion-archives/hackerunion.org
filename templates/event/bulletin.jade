@@ -1,0 +1,46 @@
+{% load helpers %}
+{% load gravatar %}
+
+.talk.event
+  h4.subheader
+    #{bulletin.title}
+  .talk-content
+    !{bulletin.content|safe}
+
+  .event-deetz
+    .event-date 
+      span.start-date #{bulletin.start|date:'n/j \a\t P'} 
+      span 
+        |  &mdash;  
+      span.end-date #{bulletin.end|date:'n/j \a\t P'}
+    .event-location  
+      span.where
+        strong #{bulletin.where}
+    .attendees
+      span.hacker-count #{bulletin.followed_by.all|length} 
+      span.hacker-count-label
+        | {% ifequal bulletin.followed_by.all|length 1  %}hacker is{% else %}hackers are{% endifequal %} in. 
+      - if is_member
+        | Are you?
+    
+    - if is_insider
+      .faces
+        - for attendee in bulletin.followed_by.all
+          span
+            a(href="/nyc/members/?n=#{attendee.username}")
+              img(src!="{% gravatar_for_email attendee.get_profile.get_gravatar_email %}", title="#{attendee.get_profile().display_name}", data-id="#{attendee.pk}").has-tip.tip-top
+          
+
+  .bulletin-actions.text-right
+    - if is_member
+      span.recommend
+        span.icon-bulletin
+        span
+          a(class="recommend", data-placement='above', data-message="I thought you might like this event", title="Share this post" )
+            | Share
+
+      span(class!="attending {% following bulletin current_user_profile.user %}")
+        span.icon-bulletin
+        span
+          a(href="#", data-id="#{bulletin.pk}").event-perma-attending
+            | Participate

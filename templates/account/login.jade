@@ -1,0 +1,37 @@
+extends base
+
+block title-extended
+  | | Login
+
+block header
+block nav
+block content
+  .welcome
+    .row
+      .twelve.columns
+        img(src="#{STATIC_URL}images/logo/hackerunion_black.png")
+
+  .row.minpage
+    .five.columns.centered.login  
+      .panel
+        h1.subheader Sign In
+      
+        - if form.errors
+          p Your username and password didn't match. Please try again.
+    
+        form(method="post", action="")
+          {% csrf_token %}
+          label #{form.username.label_tag}
+          p #{form.username}
+          label #{form.password.label_tag}
+          p #{form.password}
+          p.text-right
+            a(href="/accounts/reset/")
+              | Forgot password?
+          input(type="submit", value="Sign In").button.full-width.radius
+          input(type="hidden", name="next", value="#{next}").button.small.radius
+  
+        hr 
+        
+        h6 Not a member?  
+          a(href="/accounts/apply") Apply to join &rarr;

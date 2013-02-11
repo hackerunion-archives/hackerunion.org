@@ -1,0 +1,45 @@
+{% load gravatar humanize %}
+
+.member-card
+  - if card_user.is_leader
+    .ambassador.has-tip.tip-top.noradius(title="Guide")
+  .member-top.cf
+    .pic.left
+      img(src!='{% gravatar_for_email  card_user.get_gravatar_email %}')
+    .member-info.left
+      .name
+        | #{card_user.display_name}
+      .username
+        | @#{card_user.user.username}
+        - if current_user_profile.is_leader and card_user.is_leader
+          .mentees(title!="{{ card_user.get_mentees.count }} Recruit(s)") [{{ card_user.get_mentees.count }}/{{ settings.MAX_MENTEES }}]
+      include account/social
+      
+  include account/skills
+
+  - if card_user.pk != current_user_profile.pk
+    - if current_user_profile.is_leader and card_user.is_leader and card_user.get_mentees.exists
+      .row
+        .eleven.columns.centered
+          .recruits Recruits:
+          .faces
+            - for mentee in card_user.get_mentees
+              span
+                a(href="/nyc/members/?n=#{mentee.user.username}")
+                  img(src!="{% gravatar_for_email mentee.get_gravatar_email %}", title="#{mentee.display_name}", data-id="#{mentee.user.pk}").has-tip.tip-top
+    .connect
+      .row
+        .eleven.columns.centered
+          ul.button-group.even.two-up
+            li
+              - if card_user.is_leader
+                .button.small.secondary(data-username="#{card_user.user.username}").user-message.leader-message Message
+              - else 
+                .button.small.secondary(data-username="#{card_user.user.username}").user-message Message
+            - if card_user.is_leader and not current_user_profile.is_leader and current_user_profile.leader.pk != card_user.pk and current_user_profile and card_user.chapter.pk == current_user_profile.chapter.pk
+              li
+                .button.small.secondary(data-username="#{card_user.user.username}", data-chapter="#{card_user.chapter.slug}").pair-request Request As Guide
+            - else 
+              - if current_user_profile.is_leader and not card_user.is_leader and card_user.leader
+                a(href="?n=#{card_user.leader.username}")
+                  li.button.small.secondary See Guide

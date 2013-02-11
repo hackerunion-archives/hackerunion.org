@@ -1,0 +1,22 @@
+{% load helpers %}
+{% load gravatar %}
+
+
+- for comment in comments
+    .comment
+      .row
+        .twelve.columns
+          div
+            span.icon
+              {% gravatar_img_for_email  comment.owner.get_profile.get_gravatar_email %}
+            strong
+              a(href="/nyc/members/?n=#{comment.owner.username}")
+                !{comment.owner.get_profile.display_name}
+            span.timestamp  
+              {% humanize_time_diff comment.created_at %}
+            span.right
+              span.changeit  
+                - if current_user|can_edit:comment.owner
+                  a(href="/#{current_chapter.slug}/posts/#{comment.bulletin.pk}/comment/delete/#{comment.pk}/") Delete
+      .comment-content
+        !{comment.content|safe}

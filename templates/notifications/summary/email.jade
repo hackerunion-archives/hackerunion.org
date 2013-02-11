@@ -1,0 +1,30 @@
+| Here's a summary of the latest Hacker Union updates:
+br
+br
+strong New Posts
+- if talks
+    ul
+        - for talk in talks
+            li
+                a(href="http://#{domain}/#{chapter}/posts/#{talk.pk}")
+                    | #{talk.content_plain|truncatewords_html:10}
+                |  (#{talk.comment_set.all|length} Comments) 
+- else
+  ul
+    li No new posts.
+br
+strong Upcoming Events
+- if events
+    ul
+        - for event in events
+            li
+                a(href="http://#{domain}/#{chapter}/posts/#{event.pk}")
+                    | #{event.title|truncatewords_html:10}
+                |  (#{event.followed_by.all|length} Participating)
+- else
+    ul
+      li No new events.
+br
+| Thanks,
+br
+|  - Hacker Union

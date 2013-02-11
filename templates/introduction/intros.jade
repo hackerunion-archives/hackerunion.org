@@ -1,0 +1,4 @@
+{% load helpers %}
+
+- for intro in intros
+    {% render_bulletin_inline intro current_user.get_profile %}

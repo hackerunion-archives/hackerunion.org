@@ -1,0 +1,4 @@
+{% load helpers %}
+
+- for event in events
+    {% render_bulletin_inline event current_user.get_profile %}

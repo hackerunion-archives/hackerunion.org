@@ -1,0 +1,26 @@
+extends base
+
+{% load widget_tweaks %}
+
+block title-extended
+  | | Reset Password
+
+block header
+
+block nav
+
+block content
+  .welcome
+    .row
+      .twelve.columns
+        img(src="#{STATIC_URL}images/logo/hackerunion_black.png")
+
+  .row.cramped
+    .six.columns.centered
+      .panel
+        h2 Reset Password
+        form(method="post")
+            {% csrf_token %}
+            #{form.new_password1|attr:"placeholder:New Password"}
+            #{form.new_password2|attr:"placeholder:Confirm New Password"}
+            input(type="submit").button.full-width.radius

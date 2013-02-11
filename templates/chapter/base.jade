@@ -1,0 +1,28 @@
+extends base
+
+{% load javascript %}
+
+block title
+  | #{current_chapter.slug|upper}
+
+block nav
+  ul.right
+    li.animate.active
+      a(href='/#{current_chapter.slug}') home
+    li.animate
+      a(href='/#{current_chapter.slug}/members') members
+    li.animate
+      a(href='/#{current_chapter.slug}/projects/') projects
+    - if is_insider
+      li.animate
+        a(href='/accounts/logout') logout
+    - else
+      li.animate
+        a(href='/accounts/login') login
+
+block pre-footer
+  script
+    var skills = #{skills|jsonify};
+    var affiliations = #{affiliations|jsonify};
+    var initiatives = #{initiatives|jsonify};
+    var members = #{member_usernames|jsonify};

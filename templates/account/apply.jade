@@ -1,0 +1,131 @@
+extends base
+
+{% load widget_tweaks %}
+
+block title-extended
+  | | Apply
+
+block header
+block nav
+block content
+  .welcome
+    .row
+      .twelve.columns
+        img(src="#{STATIC_URL}images/logo/hackerunion_black.png")
+
+  .row
+    .twelve.columns
+      .six.columns
+        h1 
+          | Join the Hacker Union
+        p.lead
+            strong The Hacker Union is a self-organized collective of engineers, designers, and creatives. 
+            | The application process helps us keep the community focused and genuine. We'll notify you by email once your application has been reviewed.
+            br
+
+        dl.tabs.pill
+          - if invite
+            dd.active
+              a(href="#").invite-button I have an invite code
+            dd
+              a(href="#").no-invite-button I don't have an invite code    
+          - else
+            dd.active
+              a(href="#").no-invite-button I don't have an invite code    
+            dd
+              a(href="#").invite-button I have an invite code
+      
+      .six.columns
+        .panel
+            form(action="", method="POST")
+              {% csrf_token %}
+              //#{form.errors}
+              - if invite
+                p.invite-content
+                  label #{form.invitation_code.label}
+                  #{form.invitation_code.errors}
+                  #{form.invitation_code}
+                p.no-invite-content.apply-hidden
+                  label Your Application
+                  #{form.application.errors}
+                  #{form.application|add_class:"hackeressay"}
+              - else
+                p.invite-content.apply-hidden
+                  label #{form.invitation_code.label}
+                  #{form.invitation_code.errors}
+                  #{form.invitation_code}
+                p.no-invite-content
+                  label Your Application
+                  #{form.application.errors}
+                  // #{form.application|add_class:"hackeressay"}
+                  textarea(rows="10", cols="40", name="application")#id_application.hackeressay
+                    | 1. What do you build?
+                    | 2. What tools do you use?
+                    | 3. Can we see your work online?
+                    | 4. What are you currently learning?
+                    | 5. Why would you like to join?
+                    | 6. What is your favorite personal hack?
+                    | 7. Anything else we should know?
+              p
+                label Username
+                #{form.username.errors}
+                #{form.username|add_class:"inline"}
+              p
+                label Full Name   
+                #{form.display_name.errors}
+                #{form.display_name}
+              p
+                label #{form.email.label}
+                #{form.email.errors}
+                #{form.email}
+                //- input(type="text", placeholder="Username or email", value="baby_clown420")
+              p
+                label Password
+                //- input(type="password", placeholder="password", value="aasldfjkhlds")
+                #{form.password1.errors}
+                //- #{form.password1|attr:"value:#{request.session.apply_password}"}
+                input(type="password", name="password1", value="#{init_pass}", id="id_password1")
+              p
+                label Password (Again)
+                //- input(type="password", placeholder="password", value="aasldfjkhlds")
+                #{form.password2.errors}
+                #{form.password2}
+              p
+                label Preferred Chapter
+                #{form.chapter}
+                .text-right
+                  a(href='/petition/') Don't see a chapter nearby?
+                br
+              p 
+                input(type='submit', value="Join Hacker Union!").button.radius
+     
+  
+            //- // No Invite Code        
+            //- li#noinviteTab
+            //-   form
+            //-     p
+            //-       label Full Name
+            //-       input(type="text", placeholder="Full Name", value="Andrew Sass")
+            //-     p
+            //-       label Username or Email
+            //-       input(type="text", placeholder="Username or email", value="baby_clown420")
+            //-     p
+            //-       label Password (one tyme...)
+            //-       input(type="password", placeholder="password", value="aasldfjkhlds")
+            //-     p
+            //-       label Password (...two tyme...)
+            //-       input(type="password", placeholder="password", value="aasldfjkhlds")
+            //-     p
+            //-       label What chapter are you located in?
+            //-       select
+            //-         option New York      
+            //-         option San Fransisco      
+            //-         option Boulder      
+            //-         option Austin      
+            //-         option Portland      
+            //-         option Seattle                  
+            //-     p
+            //-       label No invite? Tell us what makes you a hacker?      
+            //-       textarea(placeholder="What makes you a Hacker?").hackeressay
+            //-     p 
+            //-       .button.radius Submit Application

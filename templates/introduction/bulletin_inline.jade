@@ -1,0 +1,26 @@
+{% load gravatar %}
+{% load helpers %}
+
+li.post(data-id='#{bulletin.pk}')
+  .post-wrap.row
+    .content.three.columns
+      .creator 
+        span.icon
+         {% gravatar_img_for_email  bulletin.owner.get_profile.get_gravatar_email %}
+        span.name
+          a(href="/nyc/members/?n=#{bulletin.owner.username}")
+            | #{bulletin.owner.username}
+            - if bulletin.moderated_by
+              span.moderated(title!="Moderated by {{bulletin.moderated_by.get_profile.display_name}}") *
+    .content.six.columns
+      span.post-content(data-content!='{{bulletin.content}}')
+        !{bulletin.content|safe|truncatewords_html:100}
+      .timestamp {% humanize_time_diff bulletin.created %}
+    .content.two.columns
+      .changeit  
+        - if current_user|can_edit:bulletin.owner
+          a(href="#", data-reveal-id="editBulletin").intro-edit 
+            - if bulletin.owner.get_profile == current_user_profile
+              | Edit 
+            - else
+              | Moderate

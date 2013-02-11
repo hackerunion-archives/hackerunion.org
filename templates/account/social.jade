@@ -1,0 +1,19 @@
+.social
+	- if card_user.facebook_url and card_user.facebook_url != ""
+		a.icon-social.facebook(href='#{card_user.facebook_url}')
+
+	- if card_user.twitter_url and card_user.twitter_url != ""
+		a.icon-social.twitter(href='#{card_user.twitter_url}')
+
+	- if card_user.linkedin_url and card_user.linkedin_url != ""
+		a.icon-social.linkedin(href='#{card_user.linkedin_url}')
+
+	- if card_user.dribble_url and card_user.dribble_url != ""
+		a.icon-social.dribbble(href='#{card_user.dribble_url}')
+
+	- if card_user.github_url and card_user.github_url != ""
+		a.icon-social.github(href='#{card_user.github_url}')
+	- if current_user_profile.pk == card_user.pk 
+		- if card_user.has_no_social
+			a(href="/accounts/settings")
+				| Add Links +

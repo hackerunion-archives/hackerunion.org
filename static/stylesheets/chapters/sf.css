@@ -1,0 +1,29 @@
+/* SF Color: #00aeef */
+
+.header {
+  background: #00aeef;
+}
+
+.post-type {
+  position: absolute;
+  top: -1px;
+  right: 0px;
+  display: block;
+  width: 26px;
+  height: 26px;
+  background-color: #00aeef;
+}
+
+.post-type.event {
+  background: #00aeef url(../../images/calendar.png) no-repeat 5px 4px;
+}
+
+.from-moderator .post-type {
+  background: #00aeef url(../../images/star.png) no-repeat 6px 4px;
+}
+
+.member-map {
+  border-bottom: 1px solid #aaa;
+  border-top: 1px solid #aaa;
+  background: #00aeef;
+}

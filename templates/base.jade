@@ -1,0 +1,92 @@
+{% load compress %}
+!!! 5
+html
+    head
+        {% compress css %}
+        link(rel='stylesheet', media="screen", type='text/css', href='#{STATIC_URL}stylesheets/foundation/foundation.min.css')
+        link(rel='stylesheet', media="screen", type='text/css', href='#{STATIC_URL}stylesheets/redactor.css')
+        link(rel='stylesheet', media="screen", type='text/css', href='#{STATIC_URL}stylesheets/foundation/app.css')
+        link(rel='stylesheet', media="screen", type='text/css', href='#{STATIC_URL}stylesheets/select2.css')
+        {% endcompress %}
+
+        meta(name="description", content="The Hacker Union is a global initiative to support, connect, and empower builders. Apply today and join the movement.")
+        meta(name="keywords", content="HackerUnion, Hacker, Union, Designer, Engineering, Building, Tech")
+
+        link(rel="icon", href='#{STATIC_URL}favicon.ico')
+        //
+          <script type="text/javascript" src="//use.typekit.net/jix7hxs.js"></script>
+          <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+        script(src="#{STATIC_URL}javascripts/modernizr.foundation.js")
+        title
+          | Hacker Union
+          block title
+          block title-extended
+                
+    body
+        #fb-root
+          script
+            (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=322376137869002";
+            fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        
+        block header
+          .header
+            .row
+              nav.top-bar
+                ul
+                  li.name
+                    h1
+                      a(href='/').animate.logo
+                        img(src="#{STATIC_URL}images/logo/hackerunion_ny.png")
+                  li.toggle-topbar
+                    a(href='#')
+                section
+                block nav
+              
+        block content
+        block pre-footer
+          script
+            var skills = [];
+            var affiliations = [];
+            var initiatives = [];
+            var members = [];
+        block footer
+            .footer
+              .row
+                .left
+                  img(src="#{STATIC_URL}images/logo/hackerunion_footer.png").footerlogo
+                  p Copyright &copy; 2012 Hacker Union
+                .right
+                  .tagline
+                    | Powered by 
+                    span 
+                      a(href="/nyc/posts/go/petri") Petri
+
+
+                  .footerlinks
+                    span.apply
+                      a(href="/accounts/apply") Apply
+                    span
+                      a(href="/accounts/login") Sign In
+                    span
+                      a(href="http://www.twitter.com/hackerunion") Twitter
+                    span.last
+                      a(href="http://www.facebook.com/thehackerunion") Facebook
+            //- {% compress js %}
+            script(src="#{STATIC_URL}javascripts/jquery.js")
+            script(src="#{STATIC_URL}javascripts/foundation.min.js")
+            script(src="#{STATIC_URL}javascripts/redactor.js")
+            script(src='#{STATIC_URL}javascripts/select2.min.js')
+            script(src='#{STATIC_URL}javascripts/global.js')
+            script(src='#{STATIC_URL}javascripts/jquery.timePicker.min.js')
+            script(src='#{STATIC_URL}javascripts/jquery.isotope.min.js')
+            script(src='#{STATIC_URL}javascripts/jquery.history.js')
+            script(src='#{STATIC_URL}javascripts/jquery-ui-1.9.2.custom.js')
+            script(src='#{STATIC_URL}javascripts/jquery.checkbox.js')
+            script(src='#{STATIC_URL}javascripts/app.js')
+            //- {% endcompress %}
+        block post-footer

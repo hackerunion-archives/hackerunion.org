@@ -1,0 +1,28 @@
+extends base
+block header
+block nav
+block content
+  .welcome
+    .row
+      .twelve.columns
+        img(src="#{STATIC_URL}images/logo/hackerunion_black.png")
+
+  .row.minpage
+    .five.columns.centered.login  
+      .panel
+        h1.subheader Change Password
+      
+        - if form.errors
+          p Your passwords didn't match. Please try again.
+    
+        form(method="post", action="")
+          {% csrf_token %}
+          label #{form.old_password.label_tag}
+          p #{form.old_password}
+          label #{form.new_password1.label_tag}
+          p #{form.new_password1}
+          label #{form.new_password2.label_tag}
+          p #{form.new_password2}
+          input(type="submit", value="login").button.full-width.radius
+          input(type="hidden", name="next", value="#{next}").button.small.radius
+ 

@@ -1,0 +1,149 @@
+extends chapter/base
+
+{% load helpers %}
+{% load gravatar %}
+{% load javascript %}
+
+block title-extended
+  | | {{ bulletin.title|default:"Project" }}
+
+block nav
+  ul.right
+    li.animate
+      a(href='/#{current_chapter.slug}') home
+    li.animate
+      a(href='/#{current_chapter.slug}/members') members
+    li.animate.active
+      a(href='/#{current_chapter.slug}/projects/') projects
+    - if is_insider
+      li.animate
+        a(href='/accounts/logout') logout
+    - else
+      li.animate
+        a(href='/accounts/login') login
+
+block content
+  #sendGroupMessage.reveal-modal.medium
+    h2.subheader Compose Message
+    label Recipients (Usernames)
+    input(type="hidden", data-placeholder="Users", value!="{{my_mentee_string|default:''}}").member-message-select.skill-input
+    - if not current_user.get_profile
+      input(type="text", name="from", id="from", placeholder="Your Email").group-message-email-input
+    textarea.group-message-content(placeholder="Your Message")
+    .text-right
+      .button.radius.small.member-message-submit Send
+    a.close-reveal-modal &#215;
+
+  // Edit project
+  #editProject.reveal-modal.medium
+    h2.subheader Edit Project
+    form
+      input(type='text', placeholder='Project Name').edit-project-title-input
+      textarea(placeholder='Project Description').edit-project-content-input
+      input(type='text', placeholder='Project Image').edit-project-image-input
+    .text-right
+      a(href="#", style="margin-right:10px;").button.radius.secondary.delete-project Delete
+      a(href="#").button.radius.save-project Save
+    a.close-reveal-modal &#215;
+
+  .row.cramped.project
+    .four.columns
+      - if bulletin.picture
+        img(src="#{bulletin.picture}").project-picture
+      - else
+        img(src="http://lorempixel.com/g/600/400/animals")
+
+      .attendees
+        span.hacker-count #{bulletin.followed_by.all|length} 
+        span.hacker-count-label
+          | {% ifequal bulletin.followed_by.all|length 1  %}hacker is{% else %}hackers are{% endifequal %} in. 
+        - if is_member
+          | Are you?
+      
+      - if is_insider
+        .faces
+          - for attendee in bulletin.followed_by.all
+            span
+              a(href="/nyc/members/?n=#{attendee.username}")
+                img(src!="{% gravatar_for_email attendee.get_profile.get_gravatar_email %}", title="#{attendee.get_profile().display_name}", data-id="#{attendee.pk}").has-tip.tip-top
+        
+      - if is_member
+        ul.project-actions
+          li
+            span(class!="attending {% following bulletin current_user %}")
+              span.icon-bulletin
+              span
+                a(href="#", data-id="#{bulletin.pk}").project-attending
+                  | Participate
+          li
+            span.recommend
+              span.icon-bulletin
+              span
+                a(href="#", class="recommend", data-placement='above', data-message="I thought you might like this project", title="Share this post" )
+                  | Recommend
+
+      //
+        h6 Initiative
+        #{bulletin.initiative.name}
+      
+      - if talk in bulletin.related_talk
+        .related
+         h6 Related Stuff
+         ul
+           - for talk in bulletin.related_talk
+             li
+               #{talk.content|safe|truncatewords_html:12}
+          
+         ul
+           - for talk in bulletin.related_events
+             li
+               #{event.title}
+
+      - else
+        p
+      
+    .eight.columns.centered
+      .perma-title
+        | Project by 
+        strong
+          a(href="/nyc/members/?n=#{bulletin.owner.username}") #{bulletin.owner.get_profile.display_name} 
+        - if bulletin.moderated_by
+          span.moderated(title!="Moderated by {{bulletin.moderated_by.get_profile.display_name}}") * 
+        span.timestamp
+          {% humanize_time_diff bulletin.created %}
+        span.changeit.right
+          - if current_user|can_edit:bulletin.owner
+            a(href="#", data-reveal-id="editProject", data-id="#{bulletin.pk}").project-edit
+              - if current_user == bulletin.owner
+                | Edit 
+              - else
+                | Moderate
+
+      .talk
+        h4.subheader.project-title(data-title="#{bulletin.title}")
+          #{bulletin.title}
+        .talk-content.project-content
+          #{bulletin.content|safe}
+      
+      .social-plugins
+        .row
+          .twelve.columns
+            .tweet.left
+              a.twitter-share-button(href='https://twitter.com/share', data-via='HackerUnion') Tweet
+                script
+                  !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+            .like.left
+              .fb-like(data-send='false', data-layout='button_count', data-width='450', data-show-faces='true')
+
+      // Do the commenting stuff here
+      - if is_member
+        .reply-to-thread
+          textarea.comment-content-input
+          .text-right
+              .button.radius.comment-submit Comment
+            
+      - if is_insider
+        .comment-feed
+          include comment/comments
+  
+  

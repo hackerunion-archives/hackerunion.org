@@ -1,0 +1,109 @@
+extends chapter/base
+
+{% load helpers %}
+
+block title-extended
+  | | Members
+
+
+block header
+  - if current_user.get_profile.is_member
+    .header
+      .row
+        nav.top-bar
+          ul
+            li.name
+              h1
+                a(href='/').animate.logo
+                  img(src="#{STATIC_URL}images/logo/hackerunion_ny.png")
+            li.toggle-topbar
+              a(href='#')
+          section
+          block nav
+            ul.right
+              li.animate
+                a(href='/#{current_chapter.slug}') home
+              li.animate.active
+                a(href='/#{current_chapter.slug}/members') members
+              li.animate
+                a(href='/#{current_chapter.slug}/projects/') projects
+              - if is_insider
+                li.animate
+                  a(href='/accounts/logout') logout
+              - else
+                li.animate
+                  a(href='/accounts/login') login
+        
+      
+  
+block content
+  #sendGroupMessage.reveal-modal.medium
+    h2.subheader Send Email
+    label Recipients (Enter Usernames)
+    input(type="hidden", data-placeholder="Members").member-message-select.skill-input
+    - if not current_user.get_profile
+      input(type="text", name="from", id="from", placeholder="Your Email").group-message-email-input
+    textarea.group-message-content(placeholder="Your Message")
+    .text-right
+      .button.radius.small.member-message-submit Send
+    a.close-reveal-modal &#215;
+  // Confirm invite
+  #confirmRequest.reveal-modal.small
+    h2.subheader Thanks! Your request has been sent.
+    .text-right
+      .button.radius.small.righteous Close
+    a.close-reveal-modal &#215;  
+
+  - if current_user.get_profile.is_member
+    .searchbar
+      .row
+        .twelve.columns
+          #member-toggle
+            .toggle-this
+              | Search Members in #{current_chapter.slug|upper}
+              span.toggle-arrow + 
+            .toggle-content
+              .row
+                .four.columns
+                  //label Search by Name
+                  input(type="text", placeholder="Name").search-by-name
+                .four.columns
+                  input(type="hidden", data-placeholder="Keyword").member-skill-input.skill-input
+                .four.column.toggle
+                  input(type="checkbox").ambassadors-only 
+                  strong Only Guides
+
+  - else
+    .hero.nyc
+      .row
+        .six.columns
+          img(src="#{STATIC_URL}/images/chapters/nyc/logo_white.png")
+        .six.columns
+          .text-right
+            a(href="/accounts/apply/").hero-button
+              | Apply 
+            a(href="/accounts/login/").hero-button 
+              | Sign In
+    
+  .row
+    h3.subheader 
+      | These are the 
+      b #{current_chapter.location}  
+      | community 
+      - if current_user.get_profile
+        | members
+      - else
+        | guides
+    
+      h5.subheader.isotope-loading
+        | Loading members...
+
+  
+  //- .member-map
+    <iframe width="100%" height="340" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=New+York,+NY&amp;aq=0&amp;oq=new+york&amp;sll=37.6,-95.665&amp;sspn=46.674325,93.076172&amp;ie=UTF8&amp;hq=&amp;hnear=New+York&amp;t=m&amp;ll=40.714476,-74.005966&amp;spn=0.088478,0.32238&amp;z=12&amp;iwloc=A&amp;output=embed"></iframe>
+    
+  .member-grid
+    .row.isotope
+      - for member in members
+        .box
+          {% render_member_card member current_user.get_profile %}

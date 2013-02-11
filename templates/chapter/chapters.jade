@@ -1,0 +1,13 @@
+extends chapter/base
+
+block nav
+
+block content 
+  .chapter-grid
+    .row
+      - for chapter in chapters
+        .box
+            h4
+                | #{chapter.location}
+            p
+                | #{chapter.description}

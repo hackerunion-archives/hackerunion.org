@@ -1,0 +1,4 @@
+{% load helpers %}
+
+- for task in tasks
+    {% render_bulletin_inline task current_user.get_profile %}

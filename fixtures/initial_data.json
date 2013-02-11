@@ -1,0 +1,55 @@
+[
+  {
+    "pk": 1, 
+    "model": "account.userprofile", 
+    "fields": {
+        "status": 2, 
+        "chapter": 1, 
+        "is_leader": true, 
+        "is_moderator": true,
+        "facebook_url": "http://github.com/huffpostlabs", 
+        "twitter_url": "http://github.com/huffpostlabs", 
+        "linkedin_url": "http://github.com/huffpostlabs", 
+        "github_url": "http://github.com/huffpostlabs", 
+        "dribble_url": "http://github.com/huffpostlabs", 
+        "invitation_count": 5, 
+        "affiliations": "", 
+        "email_digest": true, 
+        "leader": null, 
+        "user": 1, 
+        "skills": [1],
+        "email_notifications": true, 
+        "starred": [],
+        "display_name": "admin"
+    }
+  },
+  {
+    "pk": 1, 
+    "model": "auth.user", 
+    "fields": {
+        "username": "admin",
+        "first_name": "", 
+        "last_name": "", 
+        "is_active": true, 
+        "is_superuser": true, 
+        "is_staff": true, 
+        "last_login": "2012-11-30T23:13:07.702Z", 
+        "groups": [], 
+        "user_permissions": [], 
+        "password": "bcrypt$$2a$12$kQXA8D1c//OioxycBvNtvOdRwTImofMLntXy.y4Z8iAiUdv3i5eEW", 
+        "email": "labs@huffingtonpost.com", 
+        "date_joined": "2012-11-30T23:13:07.702Z"
+    }
+  },
+  {
+    "pk": 1, 
+    "model": "chapter.chapter", 
+    "fields": {
+      "slug": "nyc", 
+      "location": "New York City", 
+      "description": "We are a group of hackers, developers, and tinkerers working in NYC. Our goal is to support and grow New York's hacker culture.",
+      "founded": "2012-1-1 00:00:00Z",
+      "founder": 1
+    }
+  }
+]

@@ -1,0 +1,261 @@
+// Send Group Message
+- if current_user.get_profile.is_leader
+  #sendGroupMessage.reveal-modal.medium
+    h2.subheader Send Email
+    label Recipients (Enter Usernames)
+    input(type="hidden", value="#{my_mentee_string}").group-message-select.skill-input
+    textarea.group-message-content(placeholder="Your Message")
+    select.group-message-template
+      option(selected="selected", value="") Guide Templates (Optional)
+      option(value="Welcome! Just wanted to send a quick hello. As your guide, I'm here to help you explore the group- so please don't hesitate to reach out!") Welcome a New User
+      option(value="Just wanted to check-in to say hi. How's everything going?") User Check-In
+      option(value="Hey! I've noticed that you've been really active lately. Any chance you might be interested in becoming a guide?") Become a Guide
+      option(value="Hey! One great way to use the guide system is to meet new people in your field. Have you checked out the guides under the 'members' section?") Find a New Guide
+    br
+    br
+    .text-right
+      .button.radius.small.group-message-submit Send
+    a.close-reveal-modal &#215;
+- else
+  #sendGroupMessage.reveal-modal.medium
+    h2.subheader Send Email
+    label Recipients (Enter Usernames)
+    input(type="hidden", data-placeholder="Users").member-message-select.skill-input
+    textarea.group-message-content(placeholder="Your Message")
+    .text-right
+      .button.radius.small.member-message-submit Send
+    a.close-reveal-modal &#215;
+// Create event
+#createEvent.reveal-modal.medium
+  h2.subheader Post an Event
+  p.lead Share an event with other Hacker Union members.
+  form
+    input(type='text', placeholder='Event Name').event-title-input
+    input(type='text', placeholder='Event Location').event-where-input
+    textarea(placeholder='Event Description').event-content-input
+    br
+    .twelve.columns
+      .row
+        .six.columns
+          .row
+            .twelve.columns
+              em When does the event start?
+            
+          .row
+            .twelve.columns
+              label Date
+              input(type="text", class="day-start").event-day-start
+          .row
+            .twelve.columns
+               label Time (24hr)
+               input(type="text", class="time-start").event-time-start
+
+        .six.columns.solid-column
+          .row
+            .twelve.columns
+              em When does the event end?
+
+          .row
+            .twelve.columns
+              label Date
+              input(type="text", class="day-end").event-day-end
+          .row
+            .twelve.columns
+              label Time (24hr)
+              input(type="text", class="time-end").event-time-end
+
+    //input(type='text', placeholder='Event Time Start').event-time-start-input
+    //input(type='text', placeholder='Event Time End').event-time-end-input
+  .text-right
+    .button.radius.event-submit Create Event
+  a.close-reveal-modal &#215;
+
+// Ban users
+#banUser.reveal-modal.small
+  h2.subheader Ban User
+  p.lead Remove a user from the group. Use carefully!
+  form
+    label Username
+    input(type="hidden").user-select.ban-user-input
+  .text-right
+    a(href="#").button.radius.ban-user-submit Ban
+  a.close-reveal-modal &#215;
+
+// Transfer mentees
+#doMentees.reveal-modal.small
+  h2.subheader Transfer Recruits
+  p.lead Transfer any recruit to any guide.
+  form
+    label Guide
+    input(type="hidden").user-select.transfer-leader-input
+
+    label Recruit
+    input(type="hidden").user-select.transfer-mentee-input
+  .text-right
+    a(href="#").button.radius.transfer-mentee-submit Transfer
+  a.close-reveal-modal &#215;
+
+// Manage moderators
+#doModerators.reveal-modal.small
+  h2.subheader Manage Moderators
+  p.lead Grant or revoke moderator status.
+  form
+    label Username
+    input(type="hidden").user-select.moderator-user-input
+  .text-right
+    a(href="#").button.radius.remove-moderator-submit.secondary.neighbor Revoke
+    a(href="#").button.radius.add-moderator-submit.secondary Grant
+  a.close-reveal-modal &#215;
+
+// Manage guides
+#doGuides.reveal-modal.small
+  h2.subheader Manage Guides
+  p.lead Grant or revoke guide status.
+  form
+    label Username
+    input(type="hidden").user-select.guide-user-input
+  .text-right
+    a(href="#").button.radius.remove-guide-submit.secondary.neighbor Revoke
+    a(href="#").button.radius.add-guide-submit.secondary Grant
+  a.close-reveal-modal &#215;
+
+// Inject markup
+#injectMarkup.reveal-modal.small
+  h2.subheader Inject Markup
+  p.lead Prepend markup to every chapter page.
+  form
+    textarea.markup-content(placeholder="Arbitrary Markup")
+      | {{ current_chapter.markup }}
+  .text-right
+    a(href="#").button.radius.inject-markup-submit Save
+  a.close-reveal-modal &#215;
+
+// Confirm ban
+#confirmBan.reveal-modal.small
+  h2.subheader User Banned
+  p.lead The offending user has been banned.
+  .text-right
+    .button.radius.small.righteous Close
+  a.close-reveal-modal &#215;  
+
+// General confirm
+#confirmGeneral.reveal-modal.small
+  h2.subheader Changes Saved
+  p.lead Your changes have been saved.
+  .text-right
+    .button.radius.small.righteous Close
+  a.close-reveal-modal &#215;  
+
+// Send invite
+#sendInvite.reveal-modal.small
+  h2.subheader Send an Invite
+  p.lead Invite someone to join this group.
+  form
+    label Friend's Email
+    input(type='text', placeholder='Email').invite-email-input
+  .text-right
+    a(href="#").button.radius.invite-submit Send
+  a.close-reveal-modal &#215;
+
+// Send referral
+#sendReferral.reveal-modal.small
+  h2.subheader Send Invites
+  p.lead Invite friends to join the group.
+  form
+    label Email Addresses 
+    input(type='text', placeholder='Emails').referral-email-input
+    .label.secondary.radius You can separate multiple emails with commas
+  .text-right
+    a(href="#").button.radius.referral-submit Send
+  a.close-reveal-modal &#215;
+
+// Confirm invite
+#confirmInvite.reveal-modal.small
+  h2.subheader Invite Sent
+  p.lead An email with a link to join this chapter has been sent.
+  .text-right
+    .button.radius.small.righteous Close
+  a.close-reveal-modal &#215;  
+  
+// Edit bulletin  
+#editBulletin.reveal-modal.medium
+  h2.subheader Edit Post
+  textarea.edit-bulletin-input
+  .text-right
+    a(href="#", style="margin-right:10px;").button.radius.secondary.delete-post Delete Post
+    a(href="#").button.radius.save-post Save Changes
+  a.close-reveal-modal &#215;
+
+// Edit event
+#editEvent.reveal-modal.medium
+  h2.subheader Edit Event
+  form
+    input(type='text', placeholder='Event Name').edit-event-title-input
+    input(type='text', placeholder='Event Location').edit-event-where-input
+    textarea(placeholder='Event Description').edit-event-content-input
+    br
+    .twelve.columns
+      .row
+        .six.columns
+          .row
+            .twelve.colums
+              em When does the event start?
+
+          .row
+            .twelve.columns
+              label Date
+              input(type="text", class="day-start").edit-event-day-start
+          .row
+            .twelve.columns
+              label Time (24hr)
+              input(type="text", class="time-start").edit-event-time-start
+
+        .six.columns.solid-column
+          .row
+            .twelve.columns
+              em When does the event end?
+
+          .row
+            .twelve.columns
+              label Date
+              input(type="text", class="day-end").edit-event-day-end
+          .row
+            .twelve.columns
+              label Time (24hr)
+              input(type="text", class="time-end").edit-event-time-end
+  
+  .text-right
+    a(href="#", style="margin-right:10px;").button.radius.secondary.delete-event Delete Event
+    a(href="#").button.radius.save-event Save Changes
+  a.close-reveal-modal &#215;
+
+// Request a new mentor
+#newMentor.reveal-modal.small
+  h2.subheader Change Your Guide
+  p.lead What kind of guide (advisor) should we pair you with?
+  textarea.new-mentor-content
+  .text-right
+    .button.radius.small.new-mentor-submit Send
+  a.close-reveal-modal &#215;    
+
+// Request help
+#help.reveal-modal.small
+  - if current_user.get_profile.is_leader
+    h2.subheader Report Abuse
+    p.lead Request support from site moderators.
+  - else
+    h2.subheader Request Help
+    p.lead How can we help? A chapter guide will get in touch.
+  textarea.mentor-help-content
+  .text-right
+    .button.radius.small.mentor-help-submit Send
+  a.close-reveal-modal &#215;
+
+// Become a leader
+#becomeLeader.reveal-modal.small
+  h2.subheader Guide Application
+  p.lead Why would you like to volunteer as a guide?
+  textarea.become-mentor-content
+  .text-right
+    .button.radius.small.become-mentor-submit Apply
+  a.close-reveal-modal &#215;      

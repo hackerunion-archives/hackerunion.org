@@ -1,0 +1,24 @@
+extends base
+
+block title-extended
+  | | Forgot Password
+
+block header
+
+block nav
+
+block content
+  .welcome
+    .row
+      .twelve.columns
+        img(src="#{STATIC_URL}images/logo/hackerunion_black.png")
+
+  .row.cramped
+    .six.columns.centered
+      .panel
+        h2.subheader Forgot Your Password?
+        form(method="post")
+            {% csrf_token %}
+            #{form.email.label_tag}
+            #{form.email}
+            input(type="submit", value="Email Reset Link").button.full-width.radius

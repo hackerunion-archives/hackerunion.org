@@ -1,0 +1,34 @@
+extends chapter/base
+
+block content
+  // this is an deprecated template
+  .row.cramped
+    .four.columns
+      img(src="#")
+      
+    .eight.columns.centered
+      .perma-title
+        | Post by 
+        strong 
+          | John Smith
+        em  
+          | on 7/12/2012
+      
+      
+      .social-plugins
+        .row
+          .twelve.columns
+            .tweet.left
+              <a href="https://twitter.com/share" class="twitter-share-button" data-text="Hacker Union Post" data-via="HackerUnion" data-related="HackerUnion">Tweet</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+            .like.left
+              <iframe src="//www.facebook.com/plugins/like.php?href=http%3A%2F%2Fhackerunion.org&amp;send=false&amp;layout=button_count&amp;width=90&amp;show_faces=false&amp;font&amp;colorscheme=light&amp;action=like&amp;height=21&amp;appId=338042946226271" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:90px; height:21px;" allowTransparency="true"></iframe>
+
+      // Do the commenting stuff here
+      .reply-to-thread
+        textarea.comment-content-input
+        .text-right
+            .button.radius.comment-submit Comment
+          
+      .comment-feed
+        include comment/comments
+

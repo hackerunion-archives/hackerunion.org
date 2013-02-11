@@ -1,0 +1,32 @@
+{% load gravatar helpers %}
+
+li.post
+  .post-wrap.row
+    .two.columns
+      .avatar
+       {% gravatar_img_for_email  bulletin.owner.get_profile.get_gravatar_email %}
+
+    .content.ten.columns
+      .creator 
+         span.name 
+            #{bulletin.owner.get_profile.display_name}
+          span.username 
+            | @#{bulletin.owner.username}
+          span.right
+            span.timestamp {% humanize_time_diff bulletin.created %}
+
+      h6.request= bulletin.title
+      div
+        != bulletin.content|safe|truncatewords_html:30
+      .readmore
+        a(href="/#{bulletin.chapter.slug}/posts/#{bulletin.pk}") Read more &rarr;
+  
+  .bulletin-actions.text-right
+    //- span.leadership.mark
+      a(href="#", data-name="#{bulletin.get_request_name()}", data-pk="#{bulletin.pk}").request-active Mark Active
+    span.leadership.mark
+      a(href="#", data-name="#{bulletin.get_request_name()}", data-pk="#{bulletin.pk}", data-request="#{bulletin.request}").request-approve Approve
+    span.leadership
+      a(href="#", data-name="#{bulletin.get_request_name()}", data-pk="#{bulletin.pk}").request-deny Deny
+    span.leadership
+      a(href="mailto:#{bulletin.owner.email}", target="_blank") Contact

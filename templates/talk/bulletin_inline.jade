@@ -1,0 +1,51 @@
+{% load gravatar %}
+{% load helpers %}    
+
+li(class!="talk post{% if bulletin.is_official %} official{% endif %}{% if bulletin.promoted_by %} promoted{% endif %}", data-id='#{bulletin.pk}')
+  - if bulletin.promoted_by
+    .icon-promoted.has-tip.tip-top(title="Endorsed Post")
+  - else
+    .icon-promoted.hidden
+  - if bulletin.is_official
+    .icon-official.has-tip.tip-top(title="Only Visible to Guides")
+  - else
+    .icon-official.hidden
+  .post-wrap.row
+    .two.columns
+      .avatar
+       {% gravatar_img_for_email  bulletin.owner.get_profile.get_gravatar_email %}
+
+    .content.ten.columns
+      .creator 
+        a.name(href="/nyc/members/?n=#{bulletin.owner.username}") 
+          | #{bulletin.owner.get_profile.display_name}
+          - if bulletin.moderated_by
+            span.moderated(title!="Moderated by {{bulletin.moderated_by.get_profile.display_name}}") * 
+        span.username 
+          | @#{bulletin.owner.username}
+
+        span.right
+          span.changeit  
+            - if current_user|can_edit:bulletin.owner
+              a(href="#", data-reveal-id="editBulletin").talk-edit
+                - if bulletin.owner.get_profile == current_user_profile
+                  | Edit 
+                - else
+                  | Moderate
+          span.timestamp {% humanize_time_diff bulletin.created %}
+
+      .post-content(data-content!="{{bulletin.content}}")
+        !{bulletin.content|safe|truncatewords_html:50}
+  .bulletin-actions.text-right
+
+    span(class!="replies {% if bulletin.comment_set.all|length > 0 %}active{% endif %}")
+      a(href="/#{bulletin.chapter.slug}/posts/#{bulletin.pk}") 
+        span.icon-bulletin
+        span #{bulletin.comment_set.all|length} Replies
+    
+    - if current_user_profile.is_leader or not bulletin.is_promoted
+      span(class!="promote {% if bulletin.is_promoted %}active{% endif %}")
+        span.icon-bulletin
+        span 
+          a(href="#", data-id="#{bulletin.pk}", data-leader!="{{ current_user_profile.is_leader|yesno:'true,false' }}").talk-promote 
+            | Endorse

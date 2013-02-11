@@ -1,0 +1,183 @@
+extends chapter/base
+
+{% load widget_tweaks %}
+
+block content
+  .row.cramped
+    .twelve.columns
+      .panel
+        h1.subheader Your Settings
+        hr
+        .row
+          .four.columns
+
+            dl.vertical.tabs
+              dd.active
+                  a(href='#skills') Skills and Affiliations
+              dd
+                a(href='#social') Social Profiles
+              dd
+                a(href='#gravatar') Custom Gravatar               
+              dd
+                a(href='#email') Email Preferences               
+              dd
+                a(href='#account') Account Preferences               
+
+              
+          .eight.columns
+            ul.tabs-content            
+              
+              li#skillsTab.active
+                h5 
+                  | Add Skills and Affiliations
+                h5.subheader 
+                  | eg: Ruby, Photoshop, Copywriting
+                form(method="post", action="/accounts/settings/skill/")
+                  {% csrf_token %}
+                  p
+                    | Your Skills
+                    br
+                    input(type="hidden", name="skills", value="#{my_skill_string}").account-skill-input.skill-input
+                  p
+                    | Your Affiliations
+                    br
+                    input(type="hidden", name="affiliations", value="#{my_affiliation_string}").account-affiliation-input.skill-input
+                  
+                  hr
+                  p
+                    input(type="submit", value="Save Skills and Affiliations").button.small.secondary
+
+              li#socialTab
+                h5
+                  | Add Social Profiles
+                h5.subheader 
+                  | Paste full profile URLs for GitHub, Twitter, etc.
+              
+                form(method="post", action="/accounts/settings/social/")
+                  {% csrf_token %}
+                  #{social_form.errors}
+                  p
+                    input(id="id_facebook_url", placeholder="Facebook", type="text", name="facebook_url", maxlength="200", value='#{current_user.get_profile().facebook_url}').short
+                  p
+                    input(id="id_twitter_url", maxlength="200", type="text", placeholder="Twitter", name='twitter_url', value='#{current_user.get_profile().twitter_url}').short
+                  p
+                    input(id="id_linkedin_url", maxlength="200", type="text", placeholder="LinkedIn", name='linkedin_url', value='#{current_user.get_profile().linkedin_url}').short
+                  p
+                    input(id="id_github_url", maxlength="200", type="text", placeholder="Github", name='github_url', value='#{current_user.get_profile().github_url}').short
+                  p
+                    input(id="id_dribble_url", maxlength="200", type="text", placeholder="Dribbble", name='dribble_url', value='#{current_user.get_profile().dribble_url}').short
+                  hr
+                  p
+                    input(type="submit", value="Save Social Profiles").button.small.secondary
+
+              li#gravatarTab
+                h5
+                  | Custom Gravatar Email
+                form(method="post", action="/accounts/settings/social/")
+                  {% csrf_token %}
+                  #{social_form.errors}
+                  p
+                    input(id="id_gravatar_email", maxlength="200", type="text", placeholder="Custom Gravatar Email", name='gravatar_email', value='#{current_user.get_profile().get_gravatar_email()}').short
+                  hr
+                  p
+                    input(type="submit", value="Save Custom Gravatar").button.small.secondary
+
+              li#emailTab
+                a(name="mailingLists").invisible 
+                h5 
+                  | Email Preferences
+                dl
+                  - if current_user.get_profile.is_leader
+                    dt
+                      - if current_user.get_profile.allow_official
+                        input(type="checkbox", checked="checked").official-notice-toggle
+                      - else 
+                        input(type="checkbox").official-notice-toggle
+                      |  Administration
+                    dd
+                      a(href="{{ mailto:current_chapter.get_official_list }}")
+                        | #{current_chapter.get_official_list|urlize}
+                    
+                    hr
+                  dt 
+                    - if current_user.get_profile.allow_discuss
+                      input(type="checkbox", checked="checked").discuss-notice-toggle
+                    - else 
+                      input(type="checkbox").discuss-notice-toggle
+                    |  General Talk
+                  dd
+                    a(href="{{ mailto:current_chapter.get_discuss_list }}")
+                      | #{current_chapter.get_discuss_list|urlize}
+
+                    hr
+
+                  dt
+                    input(type="checkbox", checked="checked", disabled="disabled").disabled 
+                    |  Your Alias
+                  dd
+                    a(href="{{ mailto:current_user.get_profile.get_email }}")
+                      | #{current_user.get_profile.get_email|urlize}
+                    
+                    hr
+
+                  dt
+                    - if current_user.get_profile.email_digest == 1
+                      input(type="checkbox").digest-notice-toggle 
+                    - else
+                      input(type="checkbox", checked="checked").digest-notice-toggle 
+                    |  Curated Digest
+                  dd
+                    - if current_user.get_profile.email_digest == 1
+                      select(disabled="true").short.digest-notice-select
+                        option(value=2) Daily
+                        option(value=3) Weekly
+                        option(value=4) Monthly
+                    - else
+                      select.short.digest-notice-select
+                        - if current_user.get_profile.email_digest == 2
+                          option(value=2, selected="true") Daily
+                        - else
+                          option(value=2) Daily
+                        - if current_user.get_profile.email_digest == 3
+                          option(value=3, selected="true") Weekly
+                        - else
+                          option(value=3) Weekly
+                        - if current_user.get_profile.email_digest == 4
+                          option(value=4, selected="true") Monthly
+                        - else
+                          option(value=4) Monthly
+                  hr
+                  p
+                    input(type="submit", value="Save Email Preferences").button.small.secondary.fake-save
+
+
+              li#accountTab
+                    
+                h5 
+                  | Change Password
+                a(href="/accounts/change").button.small.secondary Change Password
+
+                hr
+
+                - if current_user.get_profile.is_leader
+                  h5 
+                    | Resign from Leadership
+                  form(method="post", action='/accounts/settings/resign/')
+                    {% csrf_token %}
+                    h5.subheader Your recruits will be re-assigned.
+                    input(type="submit", value="Resign").button.small.secondary
+                
+            //
+              - if form.errors
+                p Your passwords didn't match. Please try again.
+          
+              form(method="post", action="")
+                {% csrf_token %}
+                label #{form.old_password.label_tag}
+                p #{form.old_password}
+                label #{form.new_password1.label_tag}
+                p #{form.new_password1}
+                label #{form.new_password2.label_tag}
+                p #{form.new_password2}
+                input(type="submit", value="login").button.small.radius.secondary
+                input(type="hidden", name="next", value="#{next}").button.small.radius.secondary

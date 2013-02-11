@@ -1,0 +1,4 @@
+{% load helpers %}
+
+- for talk in talks
+    {% render_bulletin_inline talk current_user.get_profile %}

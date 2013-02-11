@@ -1,0 +1,36 @@
+extends base
+
+block title-extended
+  | | Petition Chapter
+
+block header
+
+block nav
+
+block content
+  .welcome
+    .row
+      .twelve.columns
+        img(src="#{STATIC_URL}images/logo/hackerunion_black.png")
+
+  .row.cramped
+    .eight.columns
+      h2 Petition to create a new chapter.
+      p.lead 
+        | We haven't founded a chapter near you, but if you enter your information, we'll let you know as soon as one is opened. 
+        | Let others know - the more people that petition, the faster we can get to work!
+
+    .four.columns
+      .panel
+        form(action='', method="post")
+          {% csrf_token %}
+          p
+            | Email
+            #{petition_form.email.errors}
+            #{petition_form.email}
+          p
+            | Postal Code
+            #{petition_form.postal_code.errors}
+            #{petition_form.postal_code}
+          .text-right
+            input(type="submit", value="Sign Petition").button.full-width.secondary

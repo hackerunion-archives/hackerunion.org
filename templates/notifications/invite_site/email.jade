@@ -1,0 +1,17 @@
+| Your friend (#{display_name|default:username}) has invited you to join the Hacker Union!
+br
+br
+| The Hacker Union is a global initiative to support, connect, and empower builders. Sign in today and join the movement.
+br
+br
+- if invite_code
+  a(href='http://#{domain}/accounts/apply/#{invite_code}')
+      | Click here to activate your invite
+- else
+  a(href='http://#{domain}/accounts/apply/')
+      | Click here to get started
+br
+br
+| Thanks,
+br
+|  - Hacker Union 

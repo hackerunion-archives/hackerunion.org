@@ -1,0 +1,58 @@
+extends chapter/base
+
+
+block title-extended
+  | | {{ bulletin.title|default:"Discussion" }}
+
+{% load gravatar %}
+{% load helpers %}
+{% load javascript %}
+
+block content
+  #sendGroupMessage.reveal-modal.medium
+    h2.subheader Compose Message
+    label Recipients (Usernames)
+    input(type="hidden", value!="{{my_mentee_string|default:''}}", data-placeholder="Users").member-message-select.skill-input
+    - if not current_user.get_profile
+      input(type="text", name="from", id="from", placeholder="Your Email").group-message-email-input
+    textarea.group-message-content(placeholder="Your Message")
+    .text-right
+      .button.radius.small.member-message-submit Send
+    a.close-reveal-modal &#215;
+
+
+  .row.cramped
+      .eight.columns.centered
+        .perma-title
+          | Posted by 
+          strong 
+            a(href="/nyc/members/?n=#{bulletin.owner.username}") #{bulletin.owner.get_profile.display_name} 
+          - if bulletin.moderated_by
+            span.moderated(title!="Moderated by {{bulletin.moderated_by.get_profile.display_name}}") * 
+          em.timestamp  
+            | on #{bulletin.created}
+        
+        // Do the rendering stuff here
+        {% render_bulletin bulletin current_user.get_profile %}
+        
+        .social-plugins
+          .row
+            .twelve.columns
+              .tweet.left
+                a.twitter-share-button(href='https://twitter.com/share', data-via='HackerUnion') Tweet
+                  script
+                    !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+              .like.left
+                .fb-like(data-send='false', data-layout='button_count', data-width='450', data-show-faces='true')
+
+        // Do the commenting stuff here
+        - if is_member
+          .reply-to-thread
+            textarea.comment-content-input
+            .text-right
+                .button.radius.comment-submit Comment
+        
+        - if is_insider
+          .comment-feed
+            include comment/comments
+

@@ -1,0 +1,4 @@
+import os
+
+MAILGUN_ACCESS_KEY = os.environ.get('PETRI_MAILGUN_ACCESS_KEY', '')
+MAILGUN_SERVER_NAME = os.environ.get('PETRI_MAILGUN_SERVER_NAME', '')

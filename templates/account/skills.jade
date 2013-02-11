@@ -1,0 +1,16 @@
+ul.tags.inline-list
+    - for skill in card_user.skills.all
+        li.skill
+            a(href!="/{{card_user.chapter.slug}}/members/?s={{skill.name|urlencode}}")
+                | #{skill.name}
+    - for affiliation in card_user.affiliations.all
+        li.affiliation
+            a(href!="/{{card_user.chapter.slug}}/members/?s={{affiliation.name|urlencode}}")
+                | #{affiliation.name}
+    - for initiative in card_user.initiatives.all
+        li.initiative
+            a(href!="/{{card_user.chapter.slug}}/posts/{{initiative.project.pk}}/")
+                | #{initiative.name}
+    - if card_user.pk == current_user_profile.pk and card_user.has_no_skills
+        a(href="/accounts/settings").button.full-width.radius.secondary
+            | Edit Profile

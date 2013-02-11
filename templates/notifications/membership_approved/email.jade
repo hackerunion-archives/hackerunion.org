@@ -1,0 +1,21 @@
+| Congratulations!
+br
+br
+| Your application to the Hacker Union has been approved.
+br
+br
+| Login to your account by clicking 
+a(href="http://#{domain}/accounts/login/") here.
+br
+br
+| You'll also receive all emails sent to:
+a(href="mailto:{{user.get_profile.get_email}}") {{user.get_profile.get_email}}
+br
+br
+| Finally, you can post to our members-only mailing list:
+a(href="mailto:{{ user.get_profile.chapter.get_discuss_list }}") {{ user.get_profile.chapter.get_discuss_list }}
+br
+br
+| Thanks,
+br
+|  - Hacker Union

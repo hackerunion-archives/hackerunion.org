@@ -1,0 +1,14 @@
+.talk
+  h4.subheader
+    #{bulletin.title}
+
+  .talk-content
+    !{bulletin.content|safe} 
+    
+  .bulletin-actions.text-right
+    - if is_member
+      span.recommend
+        span.icon-bulletin
+        span
+          a(class="recommend", data-placement='above', data-message="I'd like your help with this request", title="Share with other leaders" )
+            | Share

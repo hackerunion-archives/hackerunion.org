@@ -1,0 +1,24 @@
+| Here's a summary of the latest Hacker Union updates:
+| 
+| New Posts
+| ---------
+- if talks
+    - for talk in talks
+        | - #{talk.content_plain|truncatewords_html:10} (#{talk.comment_set.all|length} Comments)
+    | 
+    | Read more (and respond): http://#{domain}/#{chapter}/
+- else
+    | No new posts.
+| 
+| Upcoming Events
+| ---------------
+- if events
+    - for event in events
+        | - #{event.title|truncatewords_html:10} (#{event.followed_by.all|length} Participating)
+    | 
+    | Read more (and respond): http://#{domain}/#{chapter}/?state=event
+- else
+    | No new events.
+| 
+| Thanks,
+|  - Hacker Union

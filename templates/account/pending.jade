@@ -1,0 +1,35 @@
+extends chapter/base
+
+block title-extended
+  | | Pending
+
+block nav
+
+block content
+  .row.cramped
+    .four.columns
+      h2 Hey there! 
+      p.lead Your application is being reviewed. Chapter leadership will review you application and let you know if you're approved.
+      - if pending_bulletin
+        h6 Track your application status&mdash;
+        ul.square
+          li
+            a(href="/#{pending_bulletin.chapter.slug}/posts/#{pending_bulletin.pk}/")
+              | Application Status
+      - else
+        h6 You're already a member&mdash;
+        ul.square
+          li
+            a(href="/#{current_chapter.slug}")
+              | Visit Chapter
+
+    .eight.columns
+      .panel
+        h5 Talk with other applicants
+        .create-content
+          textarea.pending-content-input
+          .text-right
+            .button.radius.small.pending-submit Post
+          hr
+          ul.feed.pending-feed
+            include pending/pendings

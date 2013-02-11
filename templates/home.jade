@@ -1,0 +1,65 @@
+extends base
+
+{% load widget_tweaks %}
+
+block title
+  | | Welcome
+
+block header
+
+block nav
+
+block content
+  .welcome
+    .row
+      .twelve.columns
+        img(src="#{STATIC_URL}images/logo/hackerunion_black.png")
+
+  .row.map
+    .eight.columns
+       - if current_user.get_profile.is_inactive
+         .alert-box.alert Your account is inactive&mdash; please contact a chapter guide.
+       h1.subheader Welcome to the Hacker Union
+       p.lead A community of Engineers, Designers, Artists. 
+         strong
+           | Builders.
+       p The Hacker Union is a global initiative to support, connect, and empower creative builders. Apply today and join the movement.
+       
+       .cities
+         a(href="/nyc/")
+           .label.newyork New York
+         a(href="/petition/")
+           .label.portland Portland
+         a(href="/petition/")
+           .label.sanfrancisco San Francisco
+         a(href="/petition/")
+           .label.boulder Boulder
+         a(href="/petition/")
+           .label.austin Austin
+         a(href="/petition/")
+           .label.seattle Seattle
+         a(href="/petition/")
+           .label & More
+
+    .four.columns      
+      h6 Join the Union
+      form(action="/", method="post")
+        {% csrf_token %}
+        .error
+          #{ form.username.errors }
+        #{ form.username|attr:"placeholder:Full Name" }
+        #{ form.email.errors }
+        #{ form.email|attr:"placeholder:Email" }
+        #{ form.password.errors }
+        #{ form.password|attr:"placeholder:Password" }
+        //- input(type="text", placeholder="Full Name", id="apply_name")
+        //- input(type="text", placeholder="Email", id="apply_email")
+        //- input(type="password", placeholder="Password", id="apply_password")
+        input(type="submit", value="Apply Now").button.full-width
+      
+      hr
+      
+      strong.already
+        | Already have an account?
+      .right
+        a(href="/accounts/login").button.secondary Sign In

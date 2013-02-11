@@ -1,0 +1,3 @@
+{% load helpers %}
+- for pending in pendings
+    {% render_bulletin_inline pending current_user.get_profile %}
