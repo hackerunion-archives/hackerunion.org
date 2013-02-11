@@ -38,13 +38,6 @@ We automatically create a test user with superuser abilities. Username: ```admin
 The user has the password: "testuser".
 
 
-License
-----
-
-This project is licensed under GNU GENERAL PUBLIC LICENSE VERSION 3. See the file LICENSE.md for a copy of the license.
-
-
-
 Use Cases
 ----
 
@@ -57,3 +50,11 @@ Contributors
 * [Andrew Sass](http://www.andrewsass.com/)
 * [Brandon Diamond](http://www.twitter.com/brandondiamond)
 * [Matthew Conlen](http://www.mathisonian.com/)
+
+
+
+License
+----
+
+This project is licensed under GNU GENERAL PUBLIC LICENSE VERSION 3. See the file [LICENSE.md](LICENSE.md) for a copy of the license.
+
