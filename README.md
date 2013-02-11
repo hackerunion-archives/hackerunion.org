@@ -41,7 +41,7 @@ The user has the password: "testuser".
 Use Cases
 ----
 
-* [The Hacker Union](http://hackerunion.org) is built on Petri.
+* [The Hacker Union](http://hackerunion.org), an [open source project](https://github.com/hackerunion/website/), is built on Petri.
 
 
 Contributors
