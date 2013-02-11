@@ -36,8 +36,14 @@ We automatically create a test user with superuser abilities. Username: ```admin
 The user has the password: "testuser" and can be used to access the django admin project.
 
 
-Contributors
-----
+Contributing
+---
+
+All pull requests are welcome, no matter the size. For push access make a few awesome pull requests, or contact one of 
+the maintainers listed below.
+
+
+###Contributors
 
 * [Andrew Sass](http://www.andrewsass.com/)
 * [Brandon Diamond](http://www.twitter.com/brandondiamond)
