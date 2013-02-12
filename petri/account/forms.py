@@ -363,12 +363,18 @@ class FrontpageApplyForm(forms.Form):
 class AccountSocialForm(forms.ModelForm):
 
     def save(self, user_profile):
-        user_profile.facebook_url = self.cleaned_data['facebook_url']
-        user_profile.twitter_url = self.cleaned_data['twitter_url']
-        user_profile.linkedin_url = self.cleaned_data['linkedin_url']
-        user_profile.github_url = self.cleaned_data['github_url']
-        user_profile.dribble_url = self.cleaned_data['dribble_url']
-        user_profile.gravatar_email = self.cleaned_data['gravatar_email']
+        if self.cleaned_data['facebook_url'].strip() != "":
+            user_profile.facebook_url = self.cleaned_data['facebook_url']
+        if self.cleaned_data['twitter_url'].strip() != "":
+            user_profile.twitter_url = self.cleaned_data['twitter_url']
+        if self.cleaned_data['linkedin_url'].strip() != "":
+            user_profile.linkedin_url = self.cleaned_data['linkedin_url']
+        if self.cleaned_data['github_url'].strip() != "":
+            user_profile.github_url = self.cleaned_data['github_url']
+        if self.cleaned_data['dribble_url'].strip() != "":
+            user_profile.dribble_url = self.cleaned_data['dribble_url']
+        if self.cleaned_data['gravatar_email'].strip() != "":
+            user_profile.gravatar_email = self.cleaned_data['gravatar_email']
         user_profile.save()
 
     class Meta:
