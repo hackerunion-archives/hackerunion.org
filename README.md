@@ -43,12 +43,25 @@ All pull requests are welcome, no matter the size. For push access make a few aw
 the maintainers listed below.
 
 
-###Contributors
+###Maintainers
 
 * [Andrew Sass](http://www.andrewsass.com/)
 * [Brandon Diamond](http://www.twitter.com/brandondiamond)
 * [Matthew Conlen](http://www.mathisonian.com/)
 
+
+###Structure
+
+Currently, all development occurs via the *hackerunion/website* fork of the *huffpostlabs/petri* project. Both of these projects
+are open source under the GPL.
+
+This is temporary! We're working this way as Petri is currently coupled to the Hacker Union use case.
+
+Once we've isolated the two, we'll properly divide efforts: Hacker Union-specific updates will go here, and system-wide
+updates will go to Petri.
+
+This seemed to make the most sense as Hacker Union is an instance of Petri (much like any organization's deployment of
+Petri ought to be -- though we hope to have a non-source configuration mechanism down the road).
 
 License
 ----
