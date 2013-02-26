@@ -251,7 +251,7 @@ class BulletinFeed(Feed):
 
     # item_link is only needed if NewsItem has no get_absolute_url method.
     def item_link(self, item):
-        return "/" + item.chapter.slug + "/" + str(item.pk)
+        return "/" + item.chapter.slug + "/posts/" + str(item.pk)
 
 
 # TODO: optimize this mofo
