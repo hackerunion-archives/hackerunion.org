@@ -24,6 +24,7 @@ from petri.account.models import UserProfile
 from petri.chapter.models import Chapter
 from petri.chapter.decorators import chapter_view
 
+import datetime
 
 def chunks(l, n):
     """ Yield successive n-sized chunks from l.
@@ -88,7 +89,7 @@ def home(request):
         tasks = []
         pending_requests = Leadership.objects.filter(owner=request.user, response=Leadership.PENDING).order_by('-created')
 
-    events = Event.objects.filter(chapter=request.chapter).order_by('-created')
+    events = Event.objects.filter(chapter=request.chapter, end__gte=datetime.datetime.now()).order_by('start')
     intros = Introduction.objects.filter(chapter=request.chapter).order_by('-created')
     mentees = request.user.get_profile().get_mentees() if request.is_insider else []
 
