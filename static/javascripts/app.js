@@ -962,6 +962,7 @@ function isValidEmailAddress(emailAddress) {
           success: updateTalkFeed
         });
       }
+      $('.talk-content-input').setCode(""); // Hack a debounce for this button.
       return false;
     });
 
