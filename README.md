@@ -23,7 +23,7 @@ Running Locally
 ----
 
 1. Create a virtualenv in your git directory (don't worry, it will be ignored on checkins) -- ```virtualenv env```
-2. Install all the requirements (ensure ```env``` is active by running "env/bin/activate") -- ```pip install -r vaser/etc/requirements.txt```
+2. Install all the requirements (ensure ```env``` is active by running "env/bin/activate") -- ```pip install -r var/etc/requirements.txt```
 3. [optional] Run the celery tasks: ```DJANGO_LOCAL=True ./manage.py celeryd -v 2 -B -E -l INFO``` (this should run in a separate terminal from the server)
 4. Run the server in local mode -- ```var/bin/runlocal.bash``` or ```DJANGO_LOCAL=True python manage.py runserver```
 5. Visit <http://localhost:8000/>
