@@ -1,0 +1,33 @@
+#numNotifs{
+  height:18px;
+  width:18px;
+  display:none;
+}
+
+#navdropshow  {
+  color:black !important;
+  padding:5px !important;
+  text-align;left !important;
+  display:none;
+}
+
+#navdropshow a {
+  color:black !important;
+  margin:5px !important;
+}
+
+.notifcomment {
+  border-left: 3px lightblue;
+  color:grey;
+}
+
+.notifli {
+  float: left;
+  clear: left;
+  width:100%;
+}
+
+.notifli:hover {
+  background-color: rgba(196, 188, 176, 0.5);
+}
+

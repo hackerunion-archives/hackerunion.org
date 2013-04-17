@@ -42,7 +42,6 @@ Contributing
 All pull requests are welcome, no matter the size. For push access make a few awesome pull requests, or contact one of
 the maintainers listed below.
 
-
 ###Maintainers
 
 * [Andrew Sass](http://www.andrewsass.com/)
