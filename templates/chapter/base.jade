@@ -8,8 +8,9 @@ block title
 block nav
   ul.right
     li(id="notifDrop").animate.active
-      a(id='notifHref', href='/#{current_chapter.slug}') home
-          img(id='numNotifs',src="/static/images/notif_circle_1.png")
+      a(href='/#{current_chapter.slug}')#notifHref 
+        | home
+        img(src="/static/images/notif_circle_1.png")#numNotifs
       div(style="position:absolute;background-color:white;z-index:40;border:1px lightgrey solid;")
         ul(id="navdropshow",style='height:200px;')
     li.animate
