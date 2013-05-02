@@ -17,7 +17,7 @@ html
         //
           <script type="text/javascript" src="//use.typekit.net/jix7hxs.js"></script>
           <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-        script(src="#{STATIC_URL}javascripts/modernizr.foundation.js")
+        script(src="#{STATIC_URL}javascripts/vendor/modernizr.foundation.js")
         title
           | Hacker Union
           block title
@@ -78,16 +78,16 @@ html
                     span.last
                       a(href="http://www.facebook.com/thehackerunion") Facebook
             //- {% compress js %}
-            script(src="#{STATIC_URL}javascripts/jquery.js")
-            script(src="#{STATIC_URL}javascripts/foundation.min.js")
-            script(src="#{STATIC_URL}javascripts/redactor.js")
-            script(src='#{STATIC_URL}javascripts/select2.min.js')
+            script(src="#{STATIC_URL}javascripts/vendor/jquery.js")
+            script(src="#{STATIC_URL}javascripts/vendor/foundation.min.js")
+            script(src='#{STATIC_URL}javascripts/vendor/jquery-ui-1.9.2.custom.js')
+            script(src="#{STATIC_URL}javascripts/plugin/redactor.js")
+            script(src='#{STATIC_URL}javascripts/plugin/select2.min.js')
+            script(src='#{STATIC_URL}javascripts/plugin/jquery.timePicker.min.js')
+            script(src='#{STATIC_URL}javascripts/plugin/jquery.isotope.min.js')
+            script(src='#{STATIC_URL}javascripts/plugin/jquery.history.js')
+            script(src='#{STATIC_URL}javascripts/plugin/jquery.checkbox.js')
             script(src='#{STATIC_URL}javascripts/global.js')
-            script(src='#{STATIC_URL}javascripts/jquery.timePicker.min.js')
-            script(src='#{STATIC_URL}javascripts/jquery.isotope.min.js')
-            script(src='#{STATIC_URL}javascripts/jquery.history.js')
-            script(src='#{STATIC_URL}javascripts/jquery-ui-1.9.2.custom.js')
-            script(src='#{STATIC_URL}javascripts/jquery.checkbox.js')
             script(src='#{STATIC_URL}javascripts/app.js')
             //- {% endcompress %}
         block post-footer
