@@ -135,6 +135,8 @@ STATICFILES_FINDERS = (
     'compressor.finders.CompressorFinder'
 )
 
+CHAPTER_SCSS_DIR = PROJECT_PATH + '/static/sass/chapters/'
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = os.environ.get('PETRI_SECRET_KEY', '')
 

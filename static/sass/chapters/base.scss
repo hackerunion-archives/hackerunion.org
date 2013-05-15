@@ -1,0 +1,9 @@
+// Global Foundation Settings
+$primary-color: #ff5a3e;
+$mainColor: $primary-color;
+
+@import "settings";
+
+@import "foundation";
+
+@import "../app";

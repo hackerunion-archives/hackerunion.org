@@ -2,13 +2,17 @@
 !!! 5
 html
     head
-        {% compress css %}
-        link(rel='stylesheet', media="screen", type='text/css', href='#{STATIC_URL}stylesheets/foundation/foundation.min.css')
+        //- {% compress css %}
+        - if current_chapter
+          link(rel='stylesheet', media="screen", type='text/css', href='#{STATIC_URL}stylesheets/chapters/#{current_chapter.slug}.css')
+        - else
+          link(rel='stylesheet', media="screen", type='text/css', href='#{STATIC_URL}stylesheets/chapters/base.css')
+
         link(rel='stylesheet', media="screen", type='text/css', href='#{STATIC_URL}stylesheets/redactor.css')
-        link(rel='stylesheet', media="screen", type='text/css', href='#{STATIC_URL}stylesheets/foundation/app.css')
+        //- link(rel='stylesheet', media="screen", type='text/css', href='#{STATIC_URL}stylesheets/app.css')
         link(rel='stylesheet', media="screen", type='text/css', href='#{STATIC_URL}stylesheets/select2.css')
         link(rel='stylesheet', media="screen", type='text/css', href='#{STATIC_URL}stylesheets/hu.css')
-        {% endcompress %}
+        //- {% endcompress %}
 
         meta(name="description", content="The Hacker Union is a global initiative to support, connect, and empower builders. Apply today and join the movement.")
         meta(name="keywords", content="HackerUnion, Hacker, Union, Designer, Engineering, Building, Tech")

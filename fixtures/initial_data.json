@@ -49,7 +49,8 @@
       "location": "New York City", 
       "description": "We are a group of hackers, developers, and tinkerers working in NYC. Our goal is to support and grow New York's hacker culture.",
       "founded": "2012-1-1 00:00:00Z",
-      "founder": 1
+      "founder": 1,
+      "base_color": "#ff5a3e"
     }
   }
 ]

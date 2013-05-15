@@ -28,12 +28,26 @@ Running Locally
 4. Run the server in local mode -- ```var/bin/runlocal.bash``` or ```DJANGO_LOCAL=True python manage.py runserver```
 5. Visit <http://localhost:8000/>
 
+
+### Custom CSS Watching
+
+If you want to enable the dynamic chapter specific CSS updating, you need to use [compass](http://compass-style.org/) with [bundler](http://gembundler.com/). Once that is installed, the following command will watch and keep styles updated:
+
+```
+cd hackerunion.org/static
+bundle exec compass watch
+```
+
+Style changes should be made to the file ```static/sass/_app.scss```.
+
+
 Test Users
 ----
 
-We automatically create a test user with superuser abilities. Username: ```admin```
+We automatically create a test user with superuser abilities. 
 
-The user has the password: "testuser" and can be used to access the django admin project.
+* Username: ```admin```
+* password: ```testuser```
 
 
 Contributing
