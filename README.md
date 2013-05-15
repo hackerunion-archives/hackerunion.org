@@ -35,6 +35,8 @@ If you want to enable the dynamic chapter specific CSS updating, you need to use
 
 ```
 cd hackerunion.org/static
+bundle install # only need to do this once
+
 bundle exec compass watch
 ```
 
