@@ -11,7 +11,7 @@ VERSION = '0.1'
 
 FORCE_SCRIPT_NAME = ''
 
-LOCAL = os.environ.get('DJANGO_LOCAL', 'False') == 'True'
+LOCAL = os.environ.get('DJANGO_LOCAL', 'True') == 'True'
 DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
 # DEBUG = False
 
@@ -27,8 +27,8 @@ DATABASES = {
     'production': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': os.environ.get('PETRI_DB_NAME', 'petri'),
-        'USER': os.environ.get('PETRI_DB_USER', ''),
-        'PASSWORD': os.environ.get('PETRI_DB_PASSWORD', ''),
+        'USER': os.environ.get('PETRI_DB_USER', 'petri'),
+        'PASSWORD': os.environ.get('PETRI_DB_PASSWORD', 'petri'),
         'HOST': os.environ.get('PETRI_DB_HOST', '127.0.0.1'),
         'PORT': os.environ.get('PETRI_DB_PORT', '3306')
     },
@@ -66,7 +66,7 @@ else:
     VERSION += " (Production)"
     DATABASES['default'] = DATABASES['production']
     EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
-    
+
     # celery is deployed using rabbitmq as broker
     BROKER_HOST = os.environ.get('PETRI_BROKER_HOST', 'localhost')
     BROKER_PORT = int(os.environ.get('PETRI_BROKER_PORT', 5672))

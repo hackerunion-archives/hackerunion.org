@@ -64,13 +64,13 @@ class UserProfile(models.Model):
     is_moderator = models.BooleanField(default=False)
 
     chapter = models.ForeignKey(Chapter, null=True)
-    starred = models.ManyToManyField(Bulletin)
+    starred = models.ManyToManyField(Bulletin, blank=True)
     invitation_count = models.IntegerField(default=5)
     leader = models.ForeignKey(User, null=True, blank=True, related_name="mentees")
 
-    skills = models.ManyToManyField(Skill)
-    affiliations = models.ManyToManyField(Affiliation)
-    initiatives = models.ManyToManyField(Initiative)
+    skills = models.ManyToManyField(Skill, blank=True)
+    affiliations = models.ManyToManyField(Affiliation, blank=True)
+    initiatives = models.ManyToManyField(Initiative, blank=True)
 
     gravatar_email = models.EmailField(null=True, blank=True)
 
@@ -113,7 +113,7 @@ class UserProfile(models.Model):
 
         if not self.is_leader:
             self.become_leader()
-        
+
         self.is_moderator = True
         self.save()
 
@@ -131,7 +131,7 @@ class UserProfile(models.Model):
         self.is_leader = True
         self.leader = None
         self.save()
-        
+
         if self.allow_official:
             subscribe_list(self.chapter.get_official_list(), self.get_email(proxy=False))
 
@@ -180,10 +180,10 @@ class UserProfile(models.Model):
             self.assign_leader(None, commit=commit)
 
         proxy_email(self.get_email(proxy=False), self.user.username, relative=True, unproxy=True)
-        
+
         if self.allow_announce:
             subscribe_list(self.chapter.get_announce_list(), self.get_email(proxy=False))
-        
+
         if self.allow_discuss:
             subscribe_list(self.chapter.get_discuss_list(), self.get_email(proxy=False))
 
