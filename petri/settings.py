@@ -218,7 +218,8 @@ INSTALLED_APPS = (
     'djkombu',
     'django.contrib.humanize',
     'gravatar',
-    'sanitizer'
+    'sanitizer',
+    'south',
 )
 
 # A sample logging configuration. The only tangible logging

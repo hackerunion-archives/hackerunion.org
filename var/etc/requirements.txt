@@ -30,3 +30,4 @@ pytz==2012g
 wsgiref==0.1.2
 django-mailgun==0.2.1
 flup
+South==0.8.1
