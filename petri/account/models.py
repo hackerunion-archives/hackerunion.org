@@ -63,7 +63,7 @@ class UserProfile(models.Model):
     is_leader = models.BooleanField(default=False)
     is_moderator = models.BooleanField(default=False)
 
-    chapter = models.ForeignKey(Chapter, null=True)
+    chapter = models.ForeignKey(Chapter, null=False)
     starred = models.ManyToManyField(Bulletin, blank=True)
     invitation_count = models.IntegerField(default=5)
     leader = models.ForeignKey(User, null=True, blank=True, related_name="mentees")
