@@ -4,7 +4,7 @@ extends chapter/base
 
 block content
   include chapter/modals
-  
+
   .row
     .twelve.columns
       - if current_chapter.markup
@@ -19,10 +19,6 @@ block content
       dl.tabs.contained
           dd.active.talk-tab
             a(href='#talk') Discussion
-          dd.hide-for-small.event-tab
-            a(href='#events') Events
-          dd.hide-for-small.intro-tab
-            a(href='#intros') Classifieds
           - if current_user.get_profile.is_leader
             dd.hide-for-small.leader-tab
               a(href='#leader') Administration
@@ -37,12 +33,12 @@ block content
               .text-right
                 span.leaders-only
                   - if current_user.get_profile.is_leader
-                    | Only visible to guides 
+                    | Only visible to guides
                     input(type="checkbox").talk-leader-toggle
-                  - else 
+                  - else
                     .label.highlight Your post will be sent to the mailing list
                 .button.radius.small.talk-submit Post
-          
+
           hr
           ul.inline-list.filter.talk-filter
             li
@@ -53,41 +49,13 @@ block content
               a(href="#").mentees-talk My Mentees
 
           .alert-box.secondary
-            | This section displays the mailing list. 
+            | This section displays the mailing list.
             a(href="/#{current_chapter.slug}/posts/go/posting-guidelines") Read the rules!
 
 
-          ul.feed.talk-feed                     
+          ul.feed.talk-feed
            include talk/talks
-            
-        li(id="eventsTab")
-          h5 Upcoming Events 
-            // Create an Event
-            a(href="", data-reveal-id="createEvent").float-right.button.small.radius.post-event-button Post Event
 
-          hr
-          ul.inline-list.filter.event-filter
-            li
-              a(href="#").selected.all-event All
-            li
-              a(href="#").promoted-event Endorsed
-            //- li
-              a(href="#").mentees-event My Mentees
-
-          ul.feed.event-feed
-           include event/events
-
-
-        li(id="introsTab")
-          h5 Community Listings
-          .create-content
-            form(name='into-form', action='/#{current_chapter.pk}/intro', method='POST')
-              textarea.intro-content-input
-              .text-right
-                .button.radius.small.intro-submit Post
-          hr
-          ul.feed.intro-feed
-            include introduction/intros
         - if current_user.get_profile.is_leader
           li(id="leaderTab")
             h5 Administration Tasks

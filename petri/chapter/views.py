@@ -89,8 +89,6 @@ def home(request):
         tasks = []
         pending_requests = Leadership.objects.filter(owner=request.user, response=Leadership.PENDING).order_by('-created')
 
-    events = Event.objects.filter(chapter=request.chapter, end__gte=datetime.datetime.now()).order_by('start')
-    intros = Introduction.objects.filter(chapter=request.chapter).order_by('-created')
     mentees = request.user.get_profile().get_mentees() if request.is_insider else []
 
     mentee_chunks = []
@@ -113,8 +111,6 @@ def home(request):
 
     return render_to_response('chapter/home.jade',
                               {'talks': talks[:settings.MAX_BULLETINS],
-                               'events': events[:settings.MAX_BULLETINS],
-                               'intros': intros[:settings.MAX_BULLETINS],
                                'tasks': tasks,
                                'mentee_chunks': mentee_chunks,
                                'member_usernames': member_usernames,
