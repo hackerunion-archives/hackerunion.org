@@ -16,12 +16,6 @@ block content
 
 
     .eight.columns
-      dl.tabs.contained
-          dd.active.talk-tab
-            a(href='#talk') Discussion
-          - if current_user.get_profile.is_leader
-            dd.hide-for-small.leader-tab
-              a(href='#leader') Administration
       ul.tabs-content.contained
         li(id="talkTab").active
           h5 Start new topic
