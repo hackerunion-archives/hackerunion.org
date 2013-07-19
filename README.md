@@ -60,9 +60,8 @@ the maintainers listed below.
 
 ###Maintainers
 
-* [Andrew Sass](http://www.andrewsass.com/)
 * [Brandon Diamond](http://www.twitter.com/brandondiamond)
-* [Matthew Conlen](http://www.mathisonian.com/)
+* [Ben Beecher](http://www.github.com/gone)
 
 
 ###Structure
